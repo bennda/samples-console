@@ -10,6 +10,7 @@ The project contains sample applications in the following languages:
 - go
 - java
 - dotnet
+- powershell
 
 ## Quickstart
 Use `make` in root directory to build docker images for each language (same as `make all`).

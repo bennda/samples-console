@@ -69,8 +69,21 @@ net-test:
 
 net: net-build net-test
 
-build: bash-build go-build
+powershell-build:
+		@echo "\n===== docker build: powershell"
+		@docker build --no-cache --pull -t "${IMAGE_FULLNAME}-powershell" ./powershell
 
-test: bash-test go-test
+powershell-test:
+		@echo "\n===== test: powershell"; \
+		export ECHO="$(shell docker run --rm "${IMAGE_FULLNAME}-powershell" -text "hello powershell")"; \
+		export RAND="$(shell docker run --rm "${IMAGE_FULLNAME}-powershell" -mode random)"; \
+		echo "echo: $$ECHO"; \
+		echo "rand: $$RAND"
+
+powershell: powershell-build powershell-test
+
+build: bash-build go-build java-build net-build powershell-build
+
+test: bash-test go-test java-test net-test powershell-test
 
 all: build test
