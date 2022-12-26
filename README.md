@@ -7,6 +7,7 @@ This project contains simple console applications in different popular languages
 
 The project contains sample applications in the following languages:
 - bash
+- go
 
 ## Quickstart
 Use `make` in root directory to build docker images for each language (same as `make all`).

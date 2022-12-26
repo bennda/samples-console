@@ -30,8 +30,21 @@ bash-test:
 
 bash:	bash-build bash-test
 
-build: bash-build
+go-build:
+		@echo "\n===== docker build: go"
+		@docker build --no-cache --pull --build-arg BASE_IMAGE=golang --build-arg BASE_VERSION=1.19.4-alpine3.17 -t "${IMAGE_FULLNAME}-go" ./go
 
-test: bash-test
+go-test:
+		@echo "\n===== test: go"; \
+		export ECHO="$(shell docker run --rm "${IMAGE_FULLNAME}-go" -text "hello go")"; \
+		export RAND="$(shell docker run --rm "${IMAGE_FULLNAME}-go" -mode random)"; \
+		echo "echo: $$ECHO"; \
+		echo "rand: $$RAND"
+
+go: go-build go-test
+
+build: bash-build go-build
+
+test: bash-test go-test
 
 all: build test
