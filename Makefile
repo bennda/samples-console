@@ -43,6 +43,19 @@ go-test:
 
 go: go-build go-test
 
+java-build:
+		@echo "\n===== docker build: java"
+		@docker build --no-cache --pull -t "${IMAGE_FULLNAME}-java" ./java
+
+java-test:
+		@echo "\n===== test: java"; \
+		export ECHO="$(shell docker run --rm "${IMAGE_FULLNAME}-java" -t="hello java")"; \
+		export RAND="$(shell docker run --rm "${IMAGE_FULLNAME}-java" --mode=random)"; \
+		echo "echo: $$ECHO"; \
+		echo "rand: $$RAND"
+
+java: java-build java-test
+
 build: bash-build go-build
 
 test: bash-test go-test
