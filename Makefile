@@ -56,6 +56,19 @@ java-test:
 
 java: java-build java-test
 
+net-build:
+		@echo "\n===== docker build: net"
+		@docker build --no-cache --pull -t "${IMAGE_FULLNAME}-net" ./net
+
+net-test:
+		@echo "\n===== test: net"; \
+		export ECHO="$(shell docker run --rm "${IMAGE_FULLNAME}-net" --text="hello .net")"; \
+		export RAND="$(shell docker run --rm "${IMAGE_FULLNAME}-net" --mode=random)"; \
+		echo "echo: $$ECHO"; \
+		echo "rand: $$RAND"
+
+net: net-build net-test
+
 build: bash-build go-build
 
 test: bash-test go-test
