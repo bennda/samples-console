@@ -82,8 +82,21 @@ powershell-test:
 
 powershell: powershell-build powershell-test
 
-build: bash-build go-build java-build net-build powershell-build
+python-build:
+		@echo "\n===== docker build: python"
+		@docker build --no-cache --pull -t "${IMAGE_FULLNAME}-python" ./python
 
-test: bash-test go-test java-test net-test powershell-test
+python-test:
+		@echo "\n===== test: python"; \
+		export ECHO="$(shell docker run --rm "${IMAGE_FULLNAME}-python" --text "hello python")"; \
+		export RAND="$(shell docker run --rm "${IMAGE_FULLNAME}-python" --mode random)"; \
+		echo "echo: $$ECHO"; \
+		echo "rand: $$RAND"		
+
+python: python-build python-test
+
+build: bash-build go-build java-build net-build powershell-build python-build
+
+test: bash-test go-test java-test net-test powershell-test python-test
 
 all: build test
