@@ -1,5 +1,5 @@
 ARG BASE_IMAGE=mcr.microsoft.com/powershell
-ARG BASE_VERSION=latest
+ARG BASE_VERSION=lts-7.2-alpine-3.14
 
 FROM $BASE_IMAGE:$BASE_VERSION
 
