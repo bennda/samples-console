@@ -14,7 +14,7 @@ Sample console applications are available in the following languages:
 - python
 
 ### Features
-Sample applications contains the following features:
+Sample applications contain the following features:
 - echo text
 - generation random number
 
